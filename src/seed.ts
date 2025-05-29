@@ -141,25 +141,44 @@ const seed = async () => {
     const payload = await getPayload({ config });
 
     for (const category of categories) {
-        const parentCategory = await payload.create({
+        // Check if category exists by slug
+        const existing = await payload.find({
             collection: "categories",
-            data: {
-                name: category.name,
-                slug: category.slug,
-                color: category.color,
-                parent: null,
-            },
+            where: { slug: { equals: category.slug } },
         });
 
-        for (const subCategory of category.subcategories || []) {
-            await payload.create({
+        let parentCategory;
+        if (existing.docs.length > 0) {
+            parentCategory = existing.docs[0];
+        } else {
+            parentCategory = await payload.create({
                 collection: "categories",
                 data: {
-                    name: subCategory.name,
-                    slug: subCategory.slug,
-                    parent: parentCategory.id,
+                    name: category.name,
+                    slug: category.slug,
+                    color: category.color,
+                    parent: null,
                 },
             });
+        }
+
+        for (const subCategory of category.subcategories || []) {
+            // Check if subcategory exists by slug
+            const subExisting = await payload.find({
+                collection: "categories",
+                where: { slug: { equals: subCategory.slug } },
+            });
+
+            if (subExisting.docs.length === 0) {
+                await payload.create({
+                    collection: "categories",
+                    data: {
+                        name: subCategory.name,
+                        slug: subCategory.slug,
+                        parent: parentCategory.id,
+                    },
+                });
+            }
         }
     }
 }
