@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import type { SearchParams } from "nuqs/server";
 import { loadProductFilters } from "@/modules/products/search-params";
 import { ProductSort } from "@/modules/products/ui/components/product-sort";
-import { ProductView } from "@/modules/products/ui/views/product-list-view";
+import { ProductListView } from "@/modules/products/ui/views/product-list-view";
 import { DEFAULT_LIMIT } from "@/constants";
 
 interface Props {
@@ -30,7 +30,7 @@ const Page = async ({ params, searchParams }: Props) => {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <ProductView category={category}/>
+          <ProductListView category={category}/>
         </HydrationBoundary>
     );
 };
