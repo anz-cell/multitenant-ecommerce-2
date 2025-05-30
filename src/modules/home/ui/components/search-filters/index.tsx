@@ -1,7 +1,6 @@
 "use client";
 
 import { useTRPC } from "@/trpc/client";
-import { CustomCategory } from "../../../../../app/(app)/(home)/types";
 import { Categories } from "./categories";
 import { SearchInput } from "./search-input";
 import { useSuspenseQuery } from "@tanstack/react-query";
