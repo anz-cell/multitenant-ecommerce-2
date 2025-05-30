@@ -1,18 +1,33 @@
-"use client";
+import { ProductFilters } from "@/modules/products/ui/components/product-filters";
+import { ProductList, ProductListSkeleton } from "@/modules/products/ui/components/product-list";
+import { getQueryClient, trpc } from "@/trpc/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { Suspense } from "react";
+import type { SearchParams } from "nuqs/server";
+import { loadProductFilters } from "@/modules/products/search-params";
+import { ProductSort } from "@/modules/products/ui/components/product-sort";
+import { ProductView } from "@/modules/products/ui/views/product-list-view";
+import { DEFAULT_LIMIT } from "@/constants";
 
-// import { useQuery } from '@tanstack/react-query';
-import { useTRPC } from '@/trpc/client';
-import { useQuery } from '@tanstack/react-query';
-
-export default function Home() {
-  const trpc = useTRPC();
-  const { data } = useQuery(trpc.auth.session.queryOptions());
-  // const categories = useQuery(trpc.categories.getMany.queryOptions());
-  return (
-    <div>
-      {/* <p>is loading: {`${categories.isLoading}`}</p> */}
-      {JSON.stringify(data?.user, null, 2)}
-      {/* // Home */}
-    </div>
-  );
+interface Props {
+    searchParams: Promise<SearchParams>;
 }
+const Page = async ({ searchParams }: Props) => {
+    const filters = await loadProductFilters(searchParams);
+
+    console.log(JSON.stringify(filters), "THIS IS FROM RSC");
+
+    const queryClient = getQueryClient();
+    void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions({
+        ...filters,
+        limit: DEFAULT_LIMIT,
+    }));
+
+    return (
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <ProductView />
+        </HydrationBoundary>
+    );
+};
+
+export default Page;

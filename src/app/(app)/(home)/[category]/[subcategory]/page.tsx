@@ -1,3 +1,4 @@
+import { DEFAULT_LIMIT } from "@/constants";
 import { loadProductFilters } from "@/modules/products/search-params";
 import { ProductList, ProductListSkeleton } from "@/modules/products/ui/components/product-list";
 import { ProductView } from "@/modules/products/ui/views/product-list-view";
@@ -19,9 +20,10 @@ const Page = async ({ params, searchParams }: Props) => {
     console.log(JSON.stringify(filters), "THIS IS FROM RSC");
 
     const queryClient = getQueryClient();
-    void queryClient.prefetchQuery(trpc.products.getMany.queryOptions({
-        category: subcategory,
+    void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions({
         ...filters,
+        category: subcategory,
+        limit: DEFAULT_LIMIT,
     }));
 
     return (
