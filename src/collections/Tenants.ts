@@ -1,9 +1,9 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from "payload";
 
 export const Tenants: CollectionConfig = {
-  slug: 'tenants',
+  slug: "tenants",
   admin: {
-    useAsTitle: 'slug',
+    useAsTitle: "slug",
   },
   fields: [
     // Email added by default
@@ -14,39 +14,40 @@ export const Tenants: CollectionConfig = {
       type: "text",
       label: "Store Name",
       admin: {
-        description: "This is the name of the store"
-      }
+        description: "This is the name of the store",
+      },
     },
     {
-        name: "slug",
-        type: "text",
-        index: true,
-        required: true,
-        unique: true,
-        admin: {
-            description: "This is the subdomain for the store",
-        },
+      name: "slug",
+      type: "text",
+      index: true,
+      required: true,
+      unique: true,
+      admin: {
+        description: "This is the subdomain for the store",
+      },
     },
     {
-        name: "image",
-        type: "upload",
-        relationTo: "media",
+      name: "image",
+      type: "upload",
+      relationTo: "media",
     },
     {
-        name: "stripeAccountId",
-        type: "text",
-        required: true,
-        admin: {
-            readOnly: true,
-        },
+      name: "stripeAccountId",
+      type: "text",
+      required: true,
+      admin: {
+        readOnly: true,
+      },
     },
     {
-        name: "stripeDetailsSubmitted",
-        type: "checkbox",
-        admin: {
-            readOnly: true,
-            description: "You cannot create products until you submit your stripe details",
-        },
+      name: "stripeDetailsSubmitted",
+      type: "checkbox",
+      admin: {
+        readOnly: true,
+        description:
+          "You cannot create products until you submit your stripe details",
+      },
     },
   ],
 };

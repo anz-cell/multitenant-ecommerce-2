@@ -1,9 +1,9 @@
-import type { CollectionConfig } from "payload"
+import type { CollectionConfig } from "payload";
 
 export const Tags: CollectionConfig = {
   slug: "tags",
   admin: {
-    useAsTitle: "name"
+    useAsTitle: "name",
   },
   fields: [
     {
@@ -11,12 +11,12 @@ export const Tags: CollectionConfig = {
       type: "text",
       required: true,
       unique: true,
-    }, 
+    },
     {
-    name: "products",
-    type: "relationship",
-    relationTo: "products",
-    hasMany: true,
-    }
+      name: "products",
+      type: "relationship",
+      relationTo: "products",
+      hasMany: true,
+    },
   ],
-}
+};

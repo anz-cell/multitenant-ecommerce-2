@@ -48,10 +48,12 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
   }
   return (
     <>
-      <div className={cn(
-        "grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
-        narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
-        )}>
+      <div
+        className={cn(
+          "grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
+          narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
+        )}
+      >
         {data?.pages
           .flatMap((page) => page.docs)
           .map((product) => (
@@ -86,10 +88,12 @@ export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
 
 export const ProductListSkeleton = ({ narrowView }: Props) => {
   return (
-    <div className={cn(
+    <div
+      className={cn(
         "grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4",
         narrowView && "lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
-        )}>
+      )}
+    >
       {Array.from({ length: DEFAULT_LIMIT }).map((_, index) => (
         <ProductCardSkeleton key={index} />
       ))}
