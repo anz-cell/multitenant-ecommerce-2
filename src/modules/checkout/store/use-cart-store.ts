@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface TenantCart {
-  productsIds: string[];
+  productIds: string[];
 }
 
 interface CartState {
@@ -24,8 +24,8 @@ export const useCartStore = create<CartState>()(
           tenantCarts: {
             ...state.tenantCarts,
             [tenantSlug]: {
-              productsIds: [
-                ...(state.tenantCarts[tenantSlug]?.productsIds || []),
+              productIds: [
+                ...(state.tenantCarts[tenantSlug]?.productIds || []),
                 productId,
               ],
             },
@@ -36,8 +36,8 @@ export const useCartStore = create<CartState>()(
           tenantCarts: {
             ...state.tenantCarts,
             [tenantSlug]: {
-              productsIds:
-                state.tenantCarts[tenantSlug]?.productsIds.filter(
+              productIds:
+                state.tenantCarts[tenantSlug]?.productIds.filter(
                   (id) => id !== productId
                 ) || [],
             },
@@ -48,7 +48,7 @@ export const useCartStore = create<CartState>()(
           tenantCarts: {
             ...state.tenantCarts,
             [tenantSlug]: {
-              productsIds: [],
+              productIds: [],
             },
           },
         })),
@@ -57,11 +57,11 @@ export const useCartStore = create<CartState>()(
           tenantCarts: {},
         }),
       getCartByTenant: (tenantSlug) =>
-        get().tenantCarts[tenantSlug]?.productsIds || [],
+        get().tenantCarts[tenantSlug]?.productIds || [],
     }),
     {
       name: "funroad-cart",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );

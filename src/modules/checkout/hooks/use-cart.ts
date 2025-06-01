@@ -19,29 +19,22 @@ export const useCart = (tenantSlug: string) => {
     }
   };
 
-  const isProductInCart = (productId: string) =>
-  {
+  const isProductInCart = (productId: string) => {
     return productIds.includes(productId);
   };
 
-
- const clearTenantCart = () =>
- {
-  clearCart(tenantSlug);
- };
-
+  const clearTenantCart = () => {
+    clearCart(tenantSlug);
+  };
 
   return {
     productIds,
     addProduct: (productId: string) => addProduct(tenantSlug, productId),
-
-    removeProduct: (productId: string) => addProduct(tenantSlug, productId),
-
+    removeProduct: (productId: string) => removeProduct(tenantSlug, productId),
     clearCart: clearTenantCart,
     clearAllCarts,
-    isProductInCart,
     toggleProduct,
+    isProductInCart,
     totalItems: productIds.length,
   };
-
-}
+};
