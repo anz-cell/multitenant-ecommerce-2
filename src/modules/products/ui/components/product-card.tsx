@@ -15,7 +15,7 @@ interface ProductCardProps {
   price: number;
 }
 
-// 9:25:59
+
 
 export const ProductCard = ({
   id,

@@ -158,7 +158,7 @@ export const checkoutRouter = createTRPCRouter({
           cancel_url: `${domain}/checkout?cancel=true`,
           mode: "payment",
           line_items: lineItems,
-          payment_method_types: ["card"], // <-- Ensure card payments are enabled
+          payment_method_types: ["card"], 
           invoice_creation: {
             enabled: true,
           },
